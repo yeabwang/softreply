@@ -15,8 +15,24 @@
     <h1 class="text-2xl font-bold mb-4">Welcome to Communication Enhancer</h1>
     <p class="mb-2">Please enter your OpenAI API Key:</p>
     <input id="api-key-input" type="text" class="border p-2 mb-4 w-full max-w-md" placeholder="sk-...">
+    <p class="mb-2">Create an encryption password (keep it safe):</p>
+    <input id="encryption-key-input" type="password" class="border p-2 mb-4 w-full max-w-md" placeholder="Enter a strong password">
     <button id="save-api-key" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-    <p id="api-key-error" class="text-red-500 hidden">Invalid API key. Please try again.</p>
+    <p id="api-key-error" class="text-red-500 hidden">Invalid API key or password. Please try again.</p>
+  </div>
+
+  <!-- Encryption Key Prompt for Decryption -->
+  <div id="encryption-key-prompt" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded max-w-md w-full">
+      <h3 class="text-lg font-bold mb-2">Enter Encryption Password</h3>
+      <p class="mb-2">Enter the password you set to access the extension:</p>
+      <input id="decrypt-key-input" type="password" class="border p-2 mb-4 w-full" placeholder="Your encryption password">
+      <div class="flex space-x-2">
+        <button id="submit-decrypt-key" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+        <button id="cancel-decrypt-key" class="bg-gray-200 px-4 py-2 rounded">Cancel</button>
+      </div>
+      <p id="decrypt-error" class="text-red-500 hidden">Incorrect password. Try again.</p>
+    </div>
   </div>
 
   <!-- Main Interface -->
