@@ -4,71 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Communication Enhancer</title>
-  <script src="lib/crypto-js.min.js"></script>
   <script src="popup.js" defer></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="popup.css">
 </head>
-<body class="bg-gray-100 font-sans">
-  <!-- API Key Input Screen -->
-  <div id="api-key-screen" class="hidden flex-col items-center justify-center h-screen p-4">
-    <h1 class="text-2xl font-bold mb-4">Welcome to Communication Enhancer</h1>
-    <p class="mb-2">Please enter your OpenAI API Key:</p>
-    <input id="api-key-input" type="text" class="border p-2 mb-4 w-full max-w-md" placeholder="sk-...">
-    <p class="mb-2">Create an encryption password (keep it safe):</p>
-    <input id="encryption-key-input" type="password" class="border p-2 mb-4 w-full max-w-md" placeholder="Enter a strong password">
-    <button id="save-api-key" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-    <p id="api-key-error" class="text-red-500 hidden">Invalid API key or password. Please try again.</p>
-  </div>
-
-  <!-- Encryption Key Prompt for Decryption -->
-  <div id="encryption-key-prompt" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-6 rounded max-w-md w-full">
-      <h3 class="text-lg font-bold mb-2">Enter Encryption Password</h3>
-      <p class="mb-2">Enter the password you set to access the extension:</p>
-      <input id="decrypt-key-input" type="password" class="border p-2 mb-4 w-full" placeholder="Your encryption password">
-      <div class="flex space-x-2">
-        <button id="submit-decrypt-key" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
-        <button id="cancel-decrypt-key" class="bg-gray-200 px-4 py-2 rounded">Cancel</button>
-      </div>
-      <p id="decrypt-error" class="text-red-500 hidden">Incorrect password. Try again.</p>
-    </div>
-  </div>
-
-  <!-- Main Interface -->
-  <div id="main-screen" class="hidden flex-col h-screen">
-    <!-- Tabs -->
-    <div class="flex border-b bg-white">
-      <button id="tab-dating" class="tab-button px-4 py-2 font-semibold text-blue-500 border-b-2 border-blue-500">Dating</button>
-      <button id="tab-casual" class="tab-button px-4 py-2 text-gray-500">Casual (Coming Soon)</button>
-      <button id="tab-professional" class="tab-button px-4 py-2 text-gray-500">Professional (Coming Soon)</button>
-    </div>
-
-    <!-- Dating Tab -->
-    <div id="dating-tab" class="flex-1 p-4 overflow-auto">
-      <h2 class="text-xl font-bold mb-4">Dating Communication Assistant</h2>
-      <button id="set-context" class="bg-gray-200 px-3 py-1 rounded mb-4">Set Context</button>
-      <div id="context-display" class="bg-gray-50 p-2 rounded mb-4 hidden"></div>
-      <textarea id="user-input" class="w-full h-32 border p-2 mb-4" placeholder="Paste conversation or describe your situation..."></textarea>
-      <div class="flex space-x-2 mb-4">
-        <button id="submit-analyze" class="bg-blue-500 text-white px-4 py-2 rounded">Analyze</button>
-        <button id="submit-craft" class="bg-blue-500 text-white px-4 py-2 rounded">Craft Response</button>
-        <button id="submit-wizard" class="bg-blue-500 text-white px-4 py-2 rounded">Dating Wizard</button>
-      </div>
-      <div id="response-area" class="bg-white p-4 rounded border min-h-[200px] overflow-auto"></div>
-    </div>
-
-    <!-- Context Modal -->
-    <div id="context-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="bg-white p-6 rounded max-w-md w-full">
-        <h3 class="text-lg font-bold mb-2">Set Conversation Context</h3>
-        <textarea id="context-input" class="w-full h-24 border p-2 mb-4" placeholder="E.g., I am in love with this girl but she doesn't know..."></textarea>
-        <div class="flex space-x-2">
-          <button id="save-context" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-          <button id="cancel-context" class="bg-gray-200 px-4 py-2 rounded">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<body>
+  <p>Opening Communication Enhancer in a new window...</p>
 </body>
 </html>

@@ -1,16 +1,25 @@
 html, body {
-    width: 600px;
-    height: 600px;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  
-  #response-area {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-  
-  .tab-button:hover {
-    background-color: #f0f0f0;
-  }
+  width: 800px;
+  height: 600px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#dating-tab {
+  overflow-y: auto;
+  max-height: calc(600px - 60px); /* Adjust for tabs height */
+}
+
+#response-area {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.tab-button:hover {
+  background-color: #f0f0f0;
+}
+
+#context-display {
+  font-size: 0.9em;
+}
