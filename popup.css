@@ -1,0 +1,16 @@
+html, body {
+    width: 600px;
+    height: 600px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  #response-area {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  .tab-button:hover {
+    background-color: #f0f0f0;
+  }
