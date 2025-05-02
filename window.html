@@ -45,7 +45,7 @@
     </div>
 
     <!-- Dating Tab -->
-    <div id="dating-tab" class="flex-1 CBA p-6 overflow-auto">
+    <div id="dating-tab" class="flex-1 p-6 overflow-auto">
       <h2 class="text-2xl font-bold mb-6">Dating Communication Assistant</h2>
       <button id="set-context" class="bg-gray-200 px-4 py-2 rounded mb-6">Set Context</button>
       <div id="context-display" class="bg-gray-50 p-3 rounded mb-6 hidden"></div>
@@ -54,8 +54,13 @@
         <button id="submit-analyze" class="bg-blue-500 text-white px-6 py-2 rounded">Analyze</button>
         <button id="submit-craft" class="bg-blue-500 text-white px-6 py-2 rounded">Craft Response</button>
         <button id="submit-wizard" class="bg-blue-500 text-white px-6 py-2 rounded">Dating Wizard</button>
+        <button id="clear-conversation" class="bg-gray-300 px-4 py-2 rounded">Clear Conversation</button>
       </div>
-      <div id="response-area" class="bg-white p-6 rounded border min-h-[300px] overflow-auto"></div>
+      <div id="response-area" class="bg-white p-6 rounded border min-h-[300px] overflow-auto mb-6"></div>
+      <div class="flex flex-col space-y-3">
+        <textarea id="follow-up-input" class="w-full h-20 border p-3" placeholder="Ask a follow-up question..."></textarea>
+        <button id="submit-follow-up" class="bg-blue-500 text-white px-6 py-2 rounded self-start">Ask Follow-Up</button>
+      </div>
     </div>
 
     <!-- Context Modal -->

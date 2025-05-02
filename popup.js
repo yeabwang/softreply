@@ -1,6 +1,7 @@
 let datingGuide = "";
 let context = "";
 let userEncryptionKey = null;
+let conversationHistory = [];
 
 // Load dating guide
 fetch(chrome.runtime.getURL("dating-guide.txt"))
@@ -32,6 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitAnalyzeBtn = document.getElementById("submit-analyze");
   const submitCraftBtn = document.getElementById("submit-craft");
   const submitWizardBtn = document.getElementById("submit-wizard");
+  const followUpInput = document.getElementById("follow-up-input");
+  const submitFollowUpBtn = document.getElementById("submit-follow-up");
+  const clearConversationBtn = document.getElementById("clear-conversation");
+
+  // Debug: Ensure elements are found
+  if (!contextModal || !saveContextBtn || !cancelContextBtn) {
+    console.error("Modal elements not found:", { contextModal, saveContextBtn, cancelContextBtn });
+  }
+  if (!followUpInput || !submitFollowUpBtn || !clearConversationBtn) {
+    console.error("Follow-up elements not found:", { followUpInput, submitFollowUpBtn, clearConversationBtn });
+  }
 
   // Check for stored API key
   chrome.storage.local.get(["encryptedApiKey", "keyHash"], ({ encryptedApiKey, keyHash }) => {
@@ -115,16 +127,33 @@ document.addEventListener("DOMContentLoaded", () => {
     contextInput.value = "";
   });
 
+  // Close modal when clicking outside content
+  contextModal.addEventListener("click", (e) => {
+    if (e.target === contextModal) {
+      contextModal.classList.add("hidden");
+      contextInput.value = "";
+    }
+  });
+
   // Handle submissions
-  submitAnalyzeBtn.addEventListener("click", () => handleSubmit("analyze"));
-  submitCraftBtn.addEventListener("click", () => handleSubmit("craft"));
-  submitWizardBtn.addEventListener("click", () => handleSubmit("wizard"));
+  submitAnalyzeBtn.addEventListener("click", () => handleSubmit("analyze", userInput));
+  submitCraftBtn.addEventListener("click", () => handleSubmit("craft", userInput));
+  submitWizardBtn.addEventListener("click", () => handleSubmit("wizard", userInput));
+  submitFollowUpBtn.addEventListener("click", () => handleSubmit("follow-up", followUpInput));
+  clearConversationBtn.addEventListener("click", () => {
+    conversationHistory = [];
+    responseArea.innerHTML = "";
+    userInput.value = "";
+    followUpInput.value = "";
+  });
 
   // Clear messages on close
   window.addEventListener("unload", () => {
     userInput.value = "";
+    followUpInput.value = "";
     responseArea.textContent = "";
     context = "";
+    conversationHistory = [];
     contextDisplay.textContent = "";
     contextDisplay.classList.add("hidden");
   });
@@ -179,22 +208,41 @@ document.addEventListener("DOMContentLoaded", () => {
     return `<div class="prose">${text}</div>`;
   }
 
-  async function handleSubmit(mode) {
-    const input = userInput.value.trim();
+  function renderConversationHistory() {
+    let html = "";
+    conversationHistory.forEach(({ role, content }) => {
+      const className = role === "user" ? "conversation-user" : "conversation-assistant";
+      const prefix = role === "user" ? "You: " : "Assistant: ";
+      html += `<div class="${className}"><strong>${prefix}</strong>${content}</div>`;
+    });
+    responseArea.innerHTML = html;
+    responseArea.scrollTop = responseArea.scrollHeight; // Auto-scroll to bottom
+  }
+
+  async function handleSubmit(mode, inputElement) {
+    const input = inputElement.value.trim();
     if (!input) {
       responseArea.textContent = "Please provide input.";
       return;
     }
 
-    responseArea.textContent = "Processing...";
+    // Add user input to conversation history
+    const userContent = mode === "follow-up" ? input : `[${mode.toUpperCase()}] ${input}`;
+    conversationHistory.push({ role: "user", content: userContent });
+    renderConversationHistory();
+    inputElement.value = ""; // Clear input
+
     let prompt = "";
+    const historyText = conversationHistory.map(({ role, content }) => `${role.toUpperCase()}: ${content}`).join("\n");
 
     if (mode === "analyze") {
-      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation/Situation: ${input}\n\nAnalyze the situation, providing empathetic and actionable recommendations. Use a friendly, human tone and format the response with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for do's, ❌ for don'ts). Include specific suggestions grounded in the guide's principles.`;
+      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nAnalyze the situation, providing empathetic and actionable recommendations. Use a friendly, human tone and format the response with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for do's, ❌ for don'ts). Include specific suggestions grounded in the guide's principles.`;
     } else if (mode === "craft") {
-      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation: ${input}\n\nCraft a response that aligns with the guide's principles (e.g., empathy, active listening, genuine interest). Preserve the user's tone and voice, making the response personal, engaging, and human (not robotic). Provide 2-3 response options with brief explanations of why they work. Format the response with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for response options). Ensure the response feels natural and conversational.`;
+      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nCraft a response that aligns with the guide's principles (e.g., empathy, active listening, genuine interest). Preserve the user's tone and voice, making the response personal, engaging, and human (not robotic). Provide 2-3 response options with brief explanations of why they work. Format the response with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for response options). Ensure the response feels natural and conversational.`;
     } else if (mode === "wizard") {
-      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nProvide general dating advice tailored to the context, focusing on emotional intelligence and communication. Use a friendly, human tone and format with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, 📘 for habits). Offer actionable strategies for common dating dynamics (e.g., flirting, texting, handling rejection).`;
+      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nProvide general dating advice tailored to the context and history, focusing on emotional intelligence and communication. Use a friendly, human tone and format with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, 📘 for habits). Offer actionable strategies for common dating dynamics (e.g., flirting, texting, handling rejection).`;
+    } else if (mode === "follow-up") {
+      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nThe user asked a follow-up question: "${input}". Provide a response that builds on the previous conversation, maintaining the user's tone and the guide's principles (e.g., empathy, genuine interest). Use a friendly, human tone and format with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for recommendations). Ensure the response feels natural and conversational.`;
     }
 
     try {
@@ -204,6 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
+      responseArea.textContent = "Processing...";
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -219,7 +268,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!response.ok) throw new Error("API request failed");
       const data = await response.json();
-      responseArea.innerHTML = renderMarkdown(data.choices[0].message.content);
+      const assistantResponse = renderMarkdown(data.choices[0].message.content);
+      conversationHistory.push({ role: "assistant", content: assistantResponse });
+      renderConversationHistory();
     } catch (err) {
       responseArea.textContent = "Error: " + err.message;
     }

@@ -1,6 +1,6 @@
 html, body {
-  width: 800px;
-  height: 600px;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -8,12 +8,29 @@ html, body {
 
 #dating-tab {
   overflow-y: auto;
-  max-height: calc(600px - 60px); /* Adjust for tabs height */
+  max-height: calc(100vh - 60px); /* Adjust for tabs height */
 }
 
 #response-area {
   white-space: pre-wrap;
   word-wrap: break-word;
+  max-height: 50vh; /* Limit response area height for scrollability */
+  overflow-y: auto;
+}
+
+/* Style conversation history */
+.conversation-user {
+  background-color: #e6f3ff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.conversation-assistant {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .tab-button:hover {
@@ -22,4 +39,24 @@ html, body {
 
 #context-display {
   font-size: 0.9em;
+}
+
+/* Modal styling */
+#encryption-key-prompt, #context-modal {
+  z-index: 1000; /* High z-index to ensure modal is on top */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Allow clicks to pass through overlay */
+}
+
+#encryption-key-prompt > div, #context-modal > div {
+  z-index: 1001; /* Ensure content is above overlay */
+  pointer-events: auto; /* Enable interactions with modal content */
+  max-width: 32rem; /* Consistent with max-w-lg */
+}
+
+/* Ensure modal is hidden properly */
+#encryption-key-prompt.hidden, #context-modal.hidden {
+  display: none;
 }
