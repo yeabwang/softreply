@@ -116,4 +116,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## Feedback
 
-We would love to hear your thoughts on the **SoftReply **. If you have any suggestions or feature requests, please open an issue on the GitHub repository or contact us directly.
+We would love to hear your thoughts on the SoftReply. If you have any suggestions or feature requests, please open an issue on the GitHub repository or contact us directly.
