@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Communication Enhancer",
+  "name": "SoftReply",
   "version": "1.0",
-  "description": "Polish your communication for dating, casual, and professional scenarios.",
+  "description": "SoftReply helps you communicate thoughtfully and confidently in any conversations.",
   "permissions": [
     "storage",
     "windows"

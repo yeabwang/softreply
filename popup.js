@@ -236,14 +236,64 @@ document.addEventListener("DOMContentLoaded", () => {
     const historyText = conversationHistory.map(({ role, content }) => `${role.toUpperCase()}: ${content}`).join("\n");
 
     if (mode === "analyze") {
-      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nAnalyze the situation, providing empathetic and actionable recommendations. Use a friendly, human tone and format the response with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for do's, ❌ for don'ts). Include specific suggestions grounded in the guide's principles.`;
+      prompt = `
+    Based on the following **Dating Communication Guide** (which contains principles of emotional intelligence, effective communication, and empathy):
+    ${datingGuide}\n\n
+    **Context**: ${context || "None"}\n\n
+    **Conversation History**:
+    ${historyText}\n\n
+    **Analysis**:
+    Please analyze the situation using principles from the Dating Communication Guide. Focus on empathy, emotional intelligence, and actionable communication strategies. Provide clear and human-centered recommendations that help improve the conversation dynamics and emotional connection. Structure your response with:
+    - **Empathetic Analysis**: What emotional cues are present? How can the user better engage emotionally? 🤔
+    - **Actionable Recommendations**: What specific steps can be taken to enhance the conversation? 🌱
+    - **Do's** ✅ and **Don'ts** ❌: Provide specific, actionable guidance based on the situation.
+
+    Ensure the response is clear, engaging, and formatted in a friendly, conversational tone, with emojis to make it easy to follow.`;
     } else if (mode === "craft") {
-      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nCraft a response that aligns with the guide's principles (e.g., empathy, active listening, genuine interest). Preserve the user's tone and voice, making the response personal, engaging, and human (not robotic). Provide 2-3 response options with brief explanations of why they work. Format the response with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for response options). Ensure the response feels natural and conversational.`;
+      prompt = `
+    Based on the following **Dating Communication Guide** (which contains principles of emotional intelligence, effective communication, and empathy):
+    ${datingGuide}\n\n
+    **Context**: ${context || "None"}\n\n
+    **Conversation History**:
+    ${historyText}\n\n
+    **Craft a Response**:
+    Using the guide's principles, craft a thoughtful and engaging response that aligns with the user's tone and voice. The response should be empathetic, human, and aligned with best practices in communication, such as active listening, genuine interest, and emotional intelligence.
+    - Provide **2-3 response options** that fit the situation, explaining why each option works based on the principles in the guide.
+    - Use **clear formatting**, with headings, numbered lists, and emojis (e.g., ✅ for do's, 🌱 for tips).
+
+    The response should feel natural, conversational, and appropriate for the context.`;
     } else if (mode === "wizard") {
-      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nProvide general dating advice tailored to the context and history, focusing on emotional intelligence and communication. Use a friendly, human tone and format with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, 📘 for habits). Offer actionable strategies for common dating dynamics (e.g., flirting, texting, handling rejection).`;
+      prompt = `
+    Based on the following **Dating Communication Guide** (which contains principles of emotional intelligence, effective communication, and empathy):
+    ${datingGuide}\n\n
+    **Context**: ${context || "None"}\n\n
+    **Conversation History**:
+    ${historyText}\n\n
+    **General Dating Advice**:
+    Provide tailored advice based on the context and conversation history. Focus on emotional intelligence and communication strategies (e.g., empathy, handling rejection, flirting, texting). Use the principles from the guide to give actionable suggestions that will improve the user’s dating experience.
+    Format the advice with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, 📘 for habits).
+    - **Actionable Strategies**: Offer advice for common dating dynamics (e.g., flirting, texting, navigating mixed signals).
+    - **Helpful Habits** 📘: Recommend habits that foster healthy communication and emotional connection.
+
+    Ensure the response is friendly, approachable, and practical.`;
     } else if (mode === "follow-up") {
-      prompt = `Based on the following dating communication guide:\n${datingGuide}\n\nContext: ${context || "None"}\n\nConversation History:\n${historyText}\n\nThe user asked a follow-up question: "${input}". Provide a response that builds on the previous conversation, maintaining the user's tone and the guide's principles (e.g., empathy, genuine interest). Use a friendly, human tone and format with clear headings, numbered lists, and emojis (e.g., 🌱 for tips, ✅ for recommendations). Ensure the response feels natural and conversational.`;
+      prompt = `
+    Based on the following **Dating Communication Guide** (which contains principles of emotional intelligence, effective communication, and empathy):
+    ${datingGuide}\n\n
+    **Context**: ${context || "None"}\n\n
+    **Conversation History**:
+    ${historyText}\n\n
+    **User's Follow-Up Question**:
+    The user asked: "${input}"\n\n
+    **Follow-Up Response**:
+    Build upon the previous conversation by answering the user's follow-up question while maintaining empathy and the principles from the guide. Use clear headings, numbered lists, and emojis to break down the response:
+    - **Empathetic Response**: How can we acknowledge the user's feelings or concerns? 🤗
+    - **Actionable Insights**: What steps should the user take next? 🌱
+    - **Response Tone**: Ensure the response maintains the user’s tone (friendly, conversational) and provides actionable, human-centered advice.
+
+    Be sure to keep the response natural, positive, and emotionally intelligent.`;
     }
+
 
     try {
       const apiKey = await new Promise(resolve => {
