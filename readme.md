@@ -1,6 +1,6 @@
 # SoftReply  Browser Extension
 
-The **SoftReply ** is a browser extension designed to help you improve your communication skills, with a focus on dating scenarios. This extension is available for **Chrome**, **Edge**, and **Brave** browsers.
+The **SoftReply** is a browser extension designed to help you improve your communication skills, with a focus on dating scenarios. This extension is available for **Chrome**, **Edge**, and **Brave** browsers.
 
 ## Features
 
@@ -104,7 +104,7 @@ If you're encountering issues, try the following:
 
 ## Contributing
 
-We welcome contributions to the **SoftReply **! Feel free to fork the repository and submit pull requests with improvements or bug fixes.
+We welcome contributions to the **SoftReply**! Feel free to fork the repository and submit pull requests with improvements or bug fixes.
 
 ---
 
